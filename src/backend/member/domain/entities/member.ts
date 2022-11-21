@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { UniqueEntityId } from '../../../@seedwork/domain/value-objects/unique-entity-id';
 
 export type MemberProps = {
   id?: string;
@@ -14,7 +14,7 @@ type UpdateProps = {
 };
 
 export class Member {
-  constructor(private readonly props: MemberProps) {
+  constructor(private props: MemberProps) {
     this.id = props.id;
     this.name = props.name;
     this.description = props.description;
@@ -27,7 +27,7 @@ export class Member {
   }
 
   private set id(value: string | undefined) {
-    this.props.id = value ?? uuidv4();
+    this.props.id = new UniqueEntityId(value).value;
   }
 
   get name(): string {
