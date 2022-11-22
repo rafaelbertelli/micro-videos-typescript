@@ -31,4 +31,16 @@ describe('Value Object', () => {
     expect(instance.value).toStrictEqual([1, 2, 3]);
     console.log(instance.toString());
   });
+
+  it('should be immutable', () => {
+    const object = {
+      name: 'Rafael',
+      prop: 123,
+      sub: { sub2: 111 },
+    };
+    const instance = new StubClass(object);
+
+    expect(() => (instance.value.sub.sub2 = 33)).toThrow();
+    expect(instance.value).toStrictEqual(object);
+  });
 });
