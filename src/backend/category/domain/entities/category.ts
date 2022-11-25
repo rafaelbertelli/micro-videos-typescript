@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '../../../@seedwork/domain/value-objects/unique-entity-id';
 
-export type MemberProps = {
+export type CategoryProps = {
   id?: string;
   name: string;
   description?: string;
@@ -13,8 +13,8 @@ type UpdateProps = {
   description?: string;
 };
 
-export class Member {
-  constructor(private props: MemberProps) {
+export class Category {
+  constructor(private props: CategoryProps) {
     this.id = props.id;
     this.name = props.name;
     this.description = props.description;

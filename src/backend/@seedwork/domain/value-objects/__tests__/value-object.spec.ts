@@ -29,7 +29,6 @@ describe('Value Object', () => {
 
     instance = new StubClass([1, 2, 3]);
     expect(instance.value).toStrictEqual([1, 2, 3]);
-    console.log(instance.toString());
   });
 
   it('should be immutable', () => {
