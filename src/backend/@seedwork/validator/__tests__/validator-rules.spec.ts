@@ -2,15 +2,9 @@ import { ValidationError } from '../../errors/validation.error';
 import { ValidatorRules } from '../validator-rules';
 
 describe('Validator Rules', () => {
-  it('should work', () => {
-    const validator = ValidatorRules.values('Rafael', 'name').required();
-    console.log(validator);
-  });
-
   describe('static values method', () => {
     it('should receive value and property as parameters', () => {
       const validator = ValidatorRules.values('Rafael', 'name');
-      console.log(validator);
       expect(validator).toBeInstanceOf(ValidatorRules);
       expect(validator['value']).toBe('Rafael');
       expect(validator['property']).toBe('name');

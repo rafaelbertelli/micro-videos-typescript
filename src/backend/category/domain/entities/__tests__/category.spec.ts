@@ -3,6 +3,16 @@ import { Category } from '../category';
 
 describe('Category', () => {
   describe('Contructor', () => {
+    it('should call validation', () => {
+      Category.validate = jest.fn();
+
+      const name = 'Giordano';
+      const category = new Category({ name });
+
+      expect(Category.validate).toHaveBeenCalled();
+      expect(category.name).toEqual(name);
+    });
+
     it('should create a category passing only name', () => {
       const name = 'Giordano';
       const category = new Category({ name });
@@ -76,6 +86,8 @@ describe('Category', () => {
 
   describe('Update', () => {
     it('should update name and keep description', () => {
+      Category.validate = jest.fn();
+
       const name = 'Giordano';
       const description = 'some description';
       const category = new Category({ name, description });
@@ -88,6 +100,8 @@ describe('Category', () => {
 
       expect(category.name).toEqual(updatedName);
       expect(category.description).toEqual(description);
+
+      expect(Category.validate).toHaveBeenCalledTimes(2);
     });
 
     it('should clean description', () => {

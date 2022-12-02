@@ -17,7 +17,6 @@ export class ValidatorRules {
   }
 
   string(): Omit<this, 'string'> {
-    console.log('>>>', this.isNotEmpty());
     if (this.isNotEmpty() && typeof this.value !== 'string') {
       throw new ValidationError(`Property "${this.property}" must be string`);
     }
@@ -44,7 +43,7 @@ export class ValidatorRules {
   }
 
   private isEmpty(): boolean {
-    return this.value === (undefined || null);
+    return this.value === undefined || this.value === null;
   }
 
   private isNotEmpty(): boolean {
