@@ -1,5 +1,5 @@
-import { ValidatorRules } from '../../../@seedwork/validator/validator-rules';
 import { Entity } from '../../../@seedwork/domain/entity/entity';
+import { CategoryValidatorFactory } from '../validators/category.validator';
 
 export type CategoryProps = {
   id?: string;
@@ -71,13 +71,19 @@ export class Category extends Entity<CategoryProps> {
 
   update({ name, description }: UpdateProps): void {
     Category.validate({ name, description });
+
     this.name = name;
     this.description = description;
   }
 
-  static validate(props: Omit<CategoryProps, 'id' | 'created_at'>) {
-    ValidatorRules.values(props.name, 'name').required().string().maxLength(99);
-    ValidatorRules.values(props.description, 'description').string();
-    ValidatorRules.values(props.is_active, 'is_active').boolean();
+  // static validate(props: Omit<CategoryProps, 'id' | 'created_at'>) {
+  //   ValidatorRules.values(props.name, 'name').required().string().maxLength(99);
+  //   ValidatorRules.values(props.description, 'description').string();
+  //   ValidatorRules.values(props.is_active, 'is_active').boolean();
+  // }
+
+  static validate(props: CategoryProps) {
+    const validator = CategoryValidatorFactory.create();
+    validator.validate(props);
   }
 }
