@@ -1,6 +1,7 @@
 import { FieldsErrors } from 'backend/@seedwork/validator/validator-fields-interface';
 import { ERROR_MSG, ERROR_NAME } from '../../constants/error.constants';
 import { InvalidUuidError } from '../invalid-uuid.error';
+import { NotFoundError } from '../not-found.error';
 import { EntityValidationError, ValidationError } from '../validation.error';
 
 describe('Test Classes of Errors', () => {
@@ -37,6 +38,19 @@ describe('Test Classes of Errors', () => {
       expect(error.message).toBe(ERROR_MSG.INVALID_ENTITY);
       expect(error.name).toBe(ERROR_NAME.ENTITY_VALIDATION_ERROR);
       expect(error.error).toStrictEqual(errorParams);
+    });
+  });
+
+  describe('NotFoundError', () => {
+    it('should verify NotFoundError', () => {
+      const errorMessage = 'Entidade não encontrada!!!';
+      let error = new NotFoundError(errorMessage);
+      expect(error.message).toBe(errorMessage);
+      expect(error.name).toBe(ERROR_NAME.NOT_FOUND_ERROR);
+
+      error = new NotFoundError();
+      expect(error.message).toBe(ERROR_MSG.NOT_FOUND_ENTITY);
+      expect(error.name).toBe(ERROR_NAME.NOT_FOUND_ERROR);
     });
   });
 });
