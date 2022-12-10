@@ -1,5 +1,6 @@
 import { ValidationError } from '../errors/validation.error';
 
+// DEPRECATED
 export class ValidatorRules {
   private constructor(private value: any, private property: string) {}
 
