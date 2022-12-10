@@ -1,3 +1,4 @@
+import { EntityValidationError } from '../../../@seedwork/errors/validation.error';
 import { Entity } from '../../../@seedwork/domain/entity/entity';
 import { CategoryValidatorFactory } from '../validators/category.validator';
 
@@ -76,14 +77,12 @@ export class Category extends Entity<CategoryProps> {
     this.description = description;
   }
 
-  // static validate(props: Omit<CategoryProps, 'id' | 'created_at'>) {
-  //   ValidatorRules.values(props.name, 'name').required().string().maxLength(99);
-  //   ValidatorRules.values(props.description, 'description').string();
-  //   ValidatorRules.values(props.is_active, 'is_active').boolean();
-  // }
-
   static validate(props: CategoryProps) {
     const validator = CategoryValidatorFactory.create();
     validator.validate(props);
+
+    if (validator.errors) {
+      throw new EntityValidationError(validator.errors);
+    }
   }
 }

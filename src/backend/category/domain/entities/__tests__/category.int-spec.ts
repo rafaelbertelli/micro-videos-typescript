@@ -1,101 +1,91 @@
-import { ValidationError } from '../../../../@seedwork/errors/validation.error';
-import { Category } from '../category';
+import { ERROR_NAME } from '../../../../@seedwork/constants/error.constants';
+import { EntityValidationError } from '../../../../@seedwork/errors/validation.error';
+import { Category, CategoryProps } from '../category';
 
 describe('Category Validations', () => {
+  test('Category validations should be working ', () => {
+    const props: CategoryProps = { name: '' };
+    expect(() => new Category(props)).toThrow(EntityValidationError);
+
+    try {
+      new Category(props);
+    } catch (error) {
+      expect(error.name).toBe(ERROR_NAME.ENTITY_VALIDATION_ERROR);
+      expect(error.error).toStrictEqual({ name: ['name should not be empty'] });
+    }
+  });
+
+  test('Category should be validated', () => {
+    const created_at = new Date();
+    const props: CategoryProps = {
+      name: 'Rafael',
+      description: 'Some descriptions',
+      is_active: true,
+      created_at,
+    };
+
+    expect(() => new Category(props)).not.toThrow();
+  });
+
   describe('Property name', () => {
-    it('should be required string with maxLength', () => {
-      expect(() => new Category({ name: '' })).toThrow(
-        new ValidationError('Property "name" is required'),
-      );
+    it('should validate error cases', () => {
+      let props: CategoryProps;
 
-      expect(() => new Category({ name: null })).toThrow(
-        new ValidationError('Property "name" is required'),
-      );
+      try {
+        props = { name: '' };
+        new Category(props);
+      } catch (error) {
+        expect(error.error).toStrictEqual({
+          name: ['name should not be empty'],
+        });
+      }
 
-      expect(() => new Category({ name: undefined })).toThrow(
-        new ValidationError('Property "name" is required'),
-      );
+      try {
+        props = { name: null };
+        new Category(props);
+      } catch (error) {
+        expect(error.error).toStrictEqual({
+          name: [
+            'name should not be empty',
+            'name must be a string',
+            'name must be shorter than or equal to 99 characters',
+          ],
+        });
+      }
 
-      expect(() => new Category({ name: 123 as any })).toThrow(
-        new ValidationError('Property "name" must be string'),
-      );
+      try {
+        props = { name: undefined };
+        new Category(props);
+      } catch (error) {
+        expect(error.error).toStrictEqual({
+          name: [
+            'name should not be empty',
+            'name must be a string',
+            'name must be shorter than or equal to 99 characters',
+          ],
+        });
+      }
 
-      expect(() => new Category({ name: true as any })).toThrow(
-        new ValidationError('Property "name" must be string'),
-      );
+      try {
+        props = { name: 'r'.repeat(100) };
+        new Category(props);
+      } catch (error) {
+        expect(error.error).toStrictEqual({
+          name: ['name must be shorter than or equal to 99 characters'],
+        });
+      }
 
-      expect(() => new Category({ name: 'l'.repeat(100) })).toThrow(
-        new ValidationError('Property "name" must be less than 99 chatacteres'),
-      );
-
-      expect(() => new Category({ name: 'l'.repeat(99) })).toThrow(
-        new ValidationError('Property "name" must be less than 99 chatacteres'),
-      );
-
-      expect(() => new Category({ name: 'l'.repeat(98) })).not.toThrow(
-        ValidationError,
-      );
-    });
-  });
-
-  describe('Property description', () => {
-    it('should be string', () => {
-      expect(
-        () => new Category({ name: 'Michael', description: 123 as any }),
-      ).toThrow(new ValidationError('Property "description" must be string'));
-
-      expect(
-        () => new Category({ name: 'Michael', description: true as any }),
-      ).toThrow(new ValidationError('Property "description" must be string'));
-
-      expect(
-        () => new Category({ name: 'Michael', description: false as any }),
-      ).toThrow(new ValidationError('Property "description" must be string'));
-
-      expect(
-        () =>
-          new Category({ name: 'Michael', description: 'Some description' }),
-      ).not.toThrow();
-    });
-  });
-
-  describe('Property is_active', () => {
-    it('should be string', () => {
-      expect(
-        () => new Category({ name: 'Michael', is_active: 123 as any }),
-      ).toThrow(new ValidationError('Property "is_active" must be boolean'));
-
-      expect(
-        () =>
-          new Category({
-            name: 'Michael',
-            is_active: 'Some description' as any,
-          }),
-      ).toThrow(new ValidationError('Property "is_active" must be boolean'));
-
-      expect(
-        () => new Category({ name: 'Michael', is_active: true }),
-      ).not.toThrow(ValidationError);
-
-      expect(
-        () => new Category({ name: 'Michael', is_active: false }),
-      ).not.toThrow(ValidationError);
-    });
-  });
-
-  describe('Validate on method', () => {
-    it('should validate on update', () => {
-      const name = 'Giordano';
-      const description = 'some description';
-      const category = new Category({ name, description });
-
-      expect(() => category.update({ name: '' })).toThrow(
-        new ValidationError('Property "name" is required'),
-      );
-
-      expect(() =>
-        category.update({ name, description: false as any }),
-      ).toThrow(new ValidationError('Property "description" must be string'));
+      try {
+        props = { name: 123 as any };
+        new Category(props);
+      } catch (error) {
+        expect(error.error).toStrictEqual({
+          name: [
+            'name must be a string',
+            'name must be shorter than or equal to 99 characters',
+          ],
+        });
+      }
     });
   });
 });
