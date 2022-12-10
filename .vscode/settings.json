@@ -19,5 +19,8 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#0c274c",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
