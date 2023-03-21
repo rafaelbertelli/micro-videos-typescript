@@ -1,6 +1,9 @@
 import { Entity } from '../domain/entity/entity';
 import { NotFoundError } from '../errors/not-found.error';
-import { RepositoryInterface } from './repository-contracts';
+import {
+  RepositoryInterface,
+  SearchebleRepositoryInterface,
+} from './repository-contracts';
 
 export abstract class InMemoryRepository<E extends Entity>
   implements RepositoryInterface<E>
@@ -35,5 +38,14 @@ export abstract class InMemoryRepository<E extends Entity>
     const register = await this.findById(id);
     const index = this.items.findIndex((item) => item.id === register.id);
     this.items.splice(index, 1);
+  }
+}
+
+export abstract class InMemorySearchableRepository<E extends Entity>
+  extends InMemoryRepository<E>
+  implements SearchebleRepositoryInterface<E, any, any>
+{
+  search(props: any): Promise<any> {
+    throw new Error('Method not implemented.');
   }
 }
