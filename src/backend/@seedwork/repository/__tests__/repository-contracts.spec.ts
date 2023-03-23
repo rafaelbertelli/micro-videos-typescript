@@ -1,4 +1,8 @@
-import { SearchParams } from '../repository-contracts';
+import {
+  SearchParams,
+  SearchResult,
+  SearchResultProps,
+} from '../repository-contracts';
 
 describe('Repository Contracts - SearchParams', () => {
   test('property page', () => {
@@ -89,6 +93,57 @@ describe('Repository Contracts - SearchParams', () => {
     arrange.forEach((props) => {
       const params = new SearchParams(props);
       expect(params.filter).toBe(props.expected);
+    });
+  });
+});
+
+describe('Repository Contracts - SearchResult', () => {
+  test('constructor props', () => {
+    let params: SearchResultProps<any> = {
+      items: ['entity2', 'entity1', 'entity3'],
+      total: 4,
+      current_page: 1,
+      per_page: 2,
+      sort: null,
+      sort_dir: null,
+      filter: null,
+    };
+    let result = new SearchResult(params);
+    expect(result.toJSON()).toStrictEqual({
+      ...params,
+      last_page: 2,
+    });
+
+    params = {
+      items: ['entity2', 'entity1', 'entity3'],
+      total: 45,
+      current_page: 1,
+      per_page: 7,
+      sort: 'name',
+      sort_dir: 'asc',
+      filter: 'teste',
+    };
+    result = new SearchResult(params);
+    expect(result.toJSON()).toStrictEqual({
+      ...params,
+      last_page: 7,
+    });
+  });
+
+  it('should test last_page = 1 when per_page field is greater thant total field', () => {
+    const params: SearchResultProps<any> = {
+      items: ['entity2', 'entity1', 'entity3'],
+      total: 4,
+      current_page: 1,
+      per_page: 15,
+      sort: null,
+      sort_dir: null,
+      filter: null,
+    };
+    const result = new SearchResult(params);
+    expect(result.toJSON()).toStrictEqual({
+      ...params,
+      last_page: 1,
     });
   });
 });
