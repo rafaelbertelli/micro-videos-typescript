@@ -9,7 +9,8 @@ type StubEntityProps = {
 };
 
 class StubEntity extends Entity<StubEntityProps> {
-  constructor(protected readonly props: StubEntityProps) {
+  // constructor(protected readonly props: StubEntityProps) {
+  constructor(readonly props: StubEntityProps) {
     super(props, props.id);
   }
 }

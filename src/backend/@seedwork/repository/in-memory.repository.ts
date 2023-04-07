@@ -48,10 +48,10 @@ export abstract class InMemorySearchableRepository<E extends Entity>
   extends InMemoryRepository<E>
   implements SearchebleRepositoryInterface<E>
 {
-  sortableFields: string[];
+  abstract sortableFields: string[];
 
   async search(props: SearchParams): Promise<SearchResult<E>> {
-    const itemsFiltered = await this.applyFilter(this.items, props.filter);
+    const itemsFiltered = this.applyFilter(this.items, props.filter);
     const itemsSorted = this.applySort(
       itemsFiltered,
       props.sort,
@@ -74,10 +74,7 @@ export abstract class InMemorySearchableRepository<E extends Entity>
     });
   }
 
-  protected abstract applyFilter(
-    items: E[],
-    filter: string | null,
-  ): Promise<E[]>;
+  protected abstract applyFilter(items: E[], filter: string | null): E[];
 
   protected applySort(
     items: E[],

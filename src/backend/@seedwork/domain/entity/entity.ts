@@ -3,7 +3,7 @@ import { UniqueEntityId } from '../value-objects/unique-entity-id';
 export abstract class Entity<Props = any> {
   private readonly uniqueEntityId: UniqueEntityId;
 
-  constructor(protected readonly props: Props, id?: string) {
+  constructor(readonly props: Props, id?: string) {
     this.uniqueEntityId = new UniqueEntityId(id);
   }
 

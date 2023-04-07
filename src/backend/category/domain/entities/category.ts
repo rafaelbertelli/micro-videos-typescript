@@ -1,5 +1,5 @@
-import { EntityValidationError } from '../../../@seedwork/errors/validation.error';
 import { Entity } from '../../../@seedwork/domain/entity/entity';
+import { EntityValidationError } from '../../../@seedwork/errors/validation.error';
 import { CategoryValidatorFactory } from '../validators/category.validator';
 
 export type CategoryProps = {
@@ -16,7 +16,8 @@ type UpdateProps = {
 };
 
 export class Category extends Entity<CategoryProps> {
-  constructor(protected readonly props: CategoryProps) {
+  // constructor(protected readonly props: CategoryProps) {
+  constructor(readonly props: CategoryProps) {
     Category.validate(props);
     super(props, props.id);
 
