@@ -1,6 +1,7 @@
 import { Entity } from '../domain/entity/entity';
 
 export type SortDirection = 'asc' | 'desc';
+
 export type SearchProps<Filter = string> = {
   page?: number;
   per_page?: number;
@@ -9,7 +10,7 @@ export type SearchProps<Filter = string> = {
   filter?: Filter;
 };
 
-export class SearchParams<Filter> {
+export class SearchParams<Filter = string> {
   private _page: number;
   private _per_page: number;
   private _sort: string;
@@ -83,7 +84,7 @@ export type SearchResultProps<E extends Entity, Filter = string> = {
   filter: Filter | null;
 };
 
-export class SearchResult<E extends Entity, Filter> {
+export class SearchResult<E extends Entity, Filter = string> {
   readonly items: E[];
   readonly total: number;
   readonly current_page: number;
@@ -91,7 +92,7 @@ export class SearchResult<E extends Entity, Filter> {
   readonly last_page: number;
   readonly sort: string | null;
   readonly sort_dir: string | null;
-  readonly filter: Filter;
+  readonly filter: Filter | null;
 
   constructor(props: SearchResultProps<E, Filter>) {
     this.items = props.items;
@@ -132,5 +133,6 @@ export interface SearchebleRepositoryInterface<
   SearchInput = SearchParams<string>,
   SearchOutput = SearchResult<E, Filter>,
 > extends RepositoryInterface<E> {
+  sortableFields: string[];
   search(props: SearchInput): Promise<SearchOutput>;
 }

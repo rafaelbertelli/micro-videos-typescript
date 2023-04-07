@@ -3,6 +3,9 @@ import { NotFoundError } from '../errors/not-found.error';
 import {
   RepositoryInterface,
   SearchebleRepositoryInterface,
+  SearchParams,
+  SearchResult,
+  SortDirection,
 } from './repository-contracts';
 
 export abstract class InMemoryRepository<E extends Entity>
@@ -43,9 +46,73 @@ export abstract class InMemoryRepository<E extends Entity>
 
 export abstract class InMemorySearchableRepository<E extends Entity>
   extends InMemoryRepository<E>
-  implements SearchebleRepositoryInterface<E, any, any>
+  implements SearchebleRepositoryInterface<E>
 {
-  search(props: any): Promise<any> {
-    throw new Error('Method not implemented.');
+  sortableFields: string[];
+
+  async search(props: SearchParams): Promise<SearchResult<E>> {
+    const itemsFiltered = await this.applyFilter(this.items, props.filter);
+    const itemsSorted = this.applySort(
+      itemsFiltered,
+      props.sort,
+      props.sort_dir,
+    );
+    const itemsPaginated = this.applyPaginate(
+      itemsSorted,
+      props.page,
+      props.per_page,
+    );
+
+    return new SearchResult({
+      items: itemsPaginated,
+      total: itemsPaginated.length,
+      current_page: props.page,
+      per_page: props.per_page,
+      sort: props.sort,
+      sort_dir: props.sort_dir,
+      filter: props.filter,
+    });
+  }
+
+  protected abstract applyFilter(
+    items: E[],
+    filter: string | null,
+  ): Promise<E[]>;
+
+  protected applySort(
+    items: E[],
+    sort: string | null,
+    sort_dir: SortDirection | null,
+  ): E[] {
+    if (!sort || !this.sortableFields.includes(sort)) {
+      return items;
+    }
+
+    return [...items].sort((a, b) => {
+      if (a['sort'] === 'asc' < b['sort']) {
+        return sort_dir === 'asc' ? -1 : 1;
+      }
+
+      if (a['sort'] === 'asc' > b['sort']) {
+        return sort_dir === 'asc' ? 1 : -1;
+      }
+
+      return 0;
+    });
+  }
+
+  protected applyPaginate(
+    items: E[],
+    page: SearchParams['page'], // string | null
+    per_page: SearchParams['per_page'], // string | null
+  ): E[] {
+    const start = (page - 1) * per_page; // 0 * 15 = 0; 1 * 15 = 15
+    const limit = start + per_page; // 0 + 15 = 15; 15 + 15 = 30
+    return items.slice(start, limit);
   }
 }
+
+// ordem
+// 1 filtro
+// 2 ordenacao
+// 3 paginacao
