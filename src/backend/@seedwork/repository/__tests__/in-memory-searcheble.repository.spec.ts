@@ -38,8 +38,8 @@ describe('In memory searchable repository', () => {
     it('filters the input list correctly based on the provided filter string', () => {
       // Arrange
       const items = [
-        new StubEntity({ name: 'apple', price: 2.5 }),
         new StubEntity({ name: 'banana', price: 1.5 }),
+        new StubEntity({ name: 'apple', price: 2.5 }),
         new StubEntity({ name: 'orange', price: 3.0 }),
       ];
 
@@ -83,6 +83,52 @@ describe('In memory searchable repository', () => {
       // Assert
       expect(filteredItems.length).toBe(0);
       expect(filteredItems).toStrictEqual([]);
+    });
+  });
+
+  describe('applySort', () => {
+    it('should not sort items', async () => {
+      const items = [
+        new StubEntity({ name: 'b', price: 1.5 }),
+        new StubEntity({ name: 'a', price: 2.5 }),
+        new StubEntity({ name: 'o', price: 3.0 }),
+      ];
+
+      const itemsSorted = repository['applySort'](items, null, null);
+      expect(itemsSorted).toStrictEqual(items);
+    });
+
+    it('should not sort by price given price is not registered at sortableFields', () => {
+      const items = [
+        new StubEntity({ name: 'a', price: 2.5 }),
+        new StubEntity({ name: 'b', price: 1.5 }),
+        new StubEntity({ name: 'o', price: 3.0 }),
+      ];
+
+      const itemsSorted = repository['applySort'](items, 'price', 'asc');
+      expect(itemsSorted).toStrictEqual(items);
+    });
+
+    it('should sort items asc', () => {
+      const items = [
+        new StubEntity({ name: 'b', price: 1.5 }),
+        new StubEntity({ name: 'a', price: 2.5 }),
+        new StubEntity({ name: 'o', price: 3.0 }),
+      ];
+
+      const itemsSorted = repository['applySort'](items, 'name', 'asc');
+      expect(itemsSorted).toStrictEqual([items[1], items[0], items[2]]);
+    });
+
+    it('should sort items desc', () => {
+      const items = [
+        new StubEntity({ name: 'b', price: 1.5 }),
+        new StubEntity({ name: 'a', price: 2.5 }),
+        new StubEntity({ name: 'o', price: 3.0 }),
+      ];
+
+      const itemsSorted = repository['applySort'](items, 'name', 'desc');
+      expect(itemsSorted).toStrictEqual([items[2], items[0], items[1]]);
     });
   });
 });

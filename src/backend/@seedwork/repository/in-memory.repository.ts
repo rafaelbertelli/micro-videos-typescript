@@ -52,11 +52,13 @@ export abstract class InMemorySearchableRepository<E extends Entity>
 
   async search(props: SearchParams): Promise<SearchResult<E>> {
     const itemsFiltered = this.applyFilter(this.items, props.filter);
+
     const itemsSorted = this.applySort(
       itemsFiltered,
       props.sort,
       props.sort_dir,
     );
+
     const itemsPaginated = this.applyPaginate(
       itemsSorted,
       props.page,
@@ -86,11 +88,11 @@ export abstract class InMemorySearchableRepository<E extends Entity>
     }
 
     return [...items].sort((a, b) => {
-      if (a['sort'] === 'asc' < b['sort']) {
+      if (a.props[sort] < b.props[sort]) {
         return sort_dir === 'asc' ? -1 : 1;
       }
 
-      if (a['sort'] === 'asc' > b['sort']) {
+      if (a.props[sort] > b.props[sort]) {
         return sort_dir === 'asc' ? 1 : -1;
       }
 
