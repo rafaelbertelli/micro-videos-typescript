@@ -12,7 +12,7 @@ export type SearchProps<Filter = string> = {
 
 export class SearchParams<Filter = string> {
   private _page: number;
-  private _per_page: number;
+  private _per_page = 15;
   private _sort: string;
   private _sort_dir: SortDirection;
   private _filter: Filter;

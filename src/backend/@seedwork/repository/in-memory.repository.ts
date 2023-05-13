@@ -67,7 +67,7 @@ export abstract class InMemorySearchableRepository<E extends Entity>
 
     return new SearchResult({
       items: itemsPaginated,
-      total: itemsPaginated.length,
+      total: itemsSorted.length,
       current_page: props.page,
       per_page: props.per_page,
       sort: props.sort,
@@ -87,6 +87,10 @@ export abstract class InMemorySearchableRepository<E extends Entity>
       return items;
     }
 
+    if (sort_dir !== 'asc' && sort_dir !== 'desc') {
+      throw new Error(`Invalid sort direction: ${sort_dir}`);
+    }
+
     return [...items].sort((a, b) => {
       if (a.props[sort] < b.props[sort]) {
         return sort_dir === 'asc' ? -1 : 1;
@@ -102,12 +106,15 @@ export abstract class InMemorySearchableRepository<E extends Entity>
 
   protected applyPaginate(
     items: E[],
-    page: SearchParams['page'], // string | null
-    per_page: SearchParams['per_page'], // string | null
+    page: number | null,
+    per_page: number | null,
   ): E[] {
-    const start = (page - 1) * per_page; // 0 * 15 = 0; 1 * 15 = 15
-    const limit = start + per_page; // 0 + 15 = 15; 15 + 15 = 30
-    return items.slice(start, limit);
+    const page_num = page ? parseInt(`${page}`, 10) : 1;
+    const per_page_num = per_page ? parseInt(`${per_page}`, 10) : items.length;
+    const start = (page_num - 1) * per_page_num;
+    const end = start + per_page_num;
+
+    return items.slice(start, end);
   }
 }
 
