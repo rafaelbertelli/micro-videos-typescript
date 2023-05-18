@@ -1,15 +1,15 @@
 import { NotFoundError } from '../../../../@seedwork/errors/not-found.error';
 import { Category } from '../../../../category/domain/entities/category';
 import { CategoryInMemoryRepository } from '../../../infra/repository/category-in-memory.repository';
-import { FindCategoryUsecase } from '../find-category.usecase';
+import { FindByIdCategoryUsecase } from '../find-by-id-category.usecase';
 
-describe('FindCategoryUsecase', () => {
+describe('FindByIdCategoryUsecase', () => {
   let repository: CategoryInMemoryRepository;
-  let usecase: FindCategoryUsecase;
+  let usecase: FindByIdCategoryUsecase;
 
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
-    usecase = new FindCategoryUsecase(repository);
+    usecase = new FindByIdCategoryUsecase(repository);
   });
 
   it('should create find a category', async () => {

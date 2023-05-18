@@ -1,28 +1,20 @@
 import { Usecase } from '../../../../backend/@seedwork/application/usecase';
 import { CategoryRepository } from '../../../../backend/category/domain/repository/category.repository';
-import { Category } from '../../../category/domain/entities/category';
 import { CategoryDto } from '../dto/category.dto';
 import { CategoryMapper } from '../mapper/category.mapper';
 
-export class CreateCategoryUsecase implements Usecase<Input, CategoryDto> {
+export class FindByIdCategoryUsecase implements Usecase<string, CategoryDto> {
   constructor(
     private readonly categoryRepository: CategoryRepository.Repository,
   ) {}
 
-  async execute(input: Input): Promise<CategoryDto> {
+  async execute(id: string): Promise<CategoryDto> {
     try {
-      const entity = new Category(input);
-      await this.categoryRepository.insert(entity);
+      const result = await this.categoryRepository.findById(id);
 
-      return CategoryMapper.toOutput(entity);
+      return CategoryMapper.toOutput(result);
     } catch (error) {
       console.error(error);
     }
   }
 }
-
-export type Input = {
-  name: string;
-  description?: string;
-  is_active?: boolean;
-};

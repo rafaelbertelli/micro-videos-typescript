@@ -1,14 +1,14 @@
 import { Category } from '../../../../category/domain/entities/category';
 import { CategoryInMemoryRepository } from '../../../infra/repository/category-in-memory.repository';
-import { GetCategoryUsecase } from '../get-category.usecase';
+import { FindAllCategoriesUsecase } from '../find-all-categories.usecase';
 
-describe('GetCategoryUsecase', () => {
+describe('FindAllCategoriesUsecase', () => {
   let repository: CategoryInMemoryRepository;
-  let usecase: GetCategoryUsecase;
+  let usecase: FindAllCategoriesUsecase;
 
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
-    usecase = new GetCategoryUsecase(repository);
+    usecase = new FindAllCategoriesUsecase(repository);
   });
 
   it('should get all categories', async () => {
