@@ -54,5 +54,5 @@ docker-compose exec app bash      # access container
 
 ```
 CONTINUAR EM:
-https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8165
+https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8169
 ```

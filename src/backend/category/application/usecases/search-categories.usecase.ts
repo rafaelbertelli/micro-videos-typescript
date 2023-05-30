@@ -1,12 +1,12 @@
-import { SearchInputDto } from 'backend/@seedwork/application/dto/search-input.dto';
-import { SearchResultDto } from 'backend/@seedwork/application/dto/search-result.dto';
-import { SearchOutputMapper } from 'backend/@seedwork/application/mapper/search-output.mapper';
+import { SearchInputDto } from '../../../../backend/@seedwork/application/dto/search-input.dto';
+import { SearchResultDto } from '../../../../backend/@seedwork/application/dto/search-result.dto';
+import { SearchOutputMapper } from '../../../../backend/@seedwork/application/mapper/search-output.mapper';
 import { Usecase } from '../../../../backend/@seedwork/application/usecase';
 import { CategoryRepository } from '../../../../backend/category/domain/repository/category.repository';
 import { CategoryDto } from '../dto/category.dto';
 import { CategoryMapper } from '../mapper/category.mapper';
 
-export class FindByIdCategoryUsecase
+export class SearchCategoriesUsecase
   implements Usecase<SearchInputDto, SearchResultDto<CategoryDto>>
 {
   constructor(
