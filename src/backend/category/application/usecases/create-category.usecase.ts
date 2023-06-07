@@ -1,5 +1,5 @@
-import { Usecase } from '../../../../backend/@seedwork/application/usecase';
-import { CategoryRepository } from '../../../../backend/category/domain/repository/category.repository';
+import { CategoryRepository } from '#backend/category/domain/repository/category.repository';
+import { Usecase } from '#backend/seedwork/application/usecase';
 import { Category } from '../../../category/domain/entities/category';
 import { CategoryDto } from '../dto/category.dto';
 import { CategoryMapper } from '../mapper/category.mapper';

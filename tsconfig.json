@@ -18,8 +18,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@core/seedwork/*": ["./backend/@seedwork/*"],
-      "@core/category/*": ["./backend/category/*"]
+      "#backend/seedwork/*": ["./backend/@seedwork/*"],
+      "#backend/category/*": ["./backend/category/*"]
     }
   },
   "include": ["src/"]
