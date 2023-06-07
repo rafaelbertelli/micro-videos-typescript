@@ -1,6 +1,4 @@
-// import { SortDirection } from '#backend/seedwork/repository';
-
-import { SortDirection } from '#backend/seedwork/repository/repository-contracts';
+import { SortDirection } from '../../../../backend/@seedwork/repository';
 
 export type SearchInputDto = {
   page?: number;

@@ -61,4 +61,7 @@ https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&c
 PODE SER QUE QUEBRE NESTES PONTOS:
 organizando imports:
 https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8225
+
+múltiplos módulos
+https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8228
 ```

@@ -1,4 +1,4 @@
-import { FieldsErrors } from '#backend/seedwork/validator/validator-fields-interface';
+import { FieldsErrors } from '../../../../backend/@seedwork/validator';
 import { ERROR_MSG, ERROR_NAME } from '../../constants/error.constants';
 import { InvalidUuidError } from '../invalid-uuid.error';
 import { NotFoundError } from '../not-found.error';

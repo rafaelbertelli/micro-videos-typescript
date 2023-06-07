@@ -6,10 +6,6 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "imports": {
-    "#backend/seedwork": "./dist/backend/@seedwork/*.js",
-    "#backend/category": "./dist/backend/category/*.js"
-  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

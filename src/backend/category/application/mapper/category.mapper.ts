@@ -1,4 +1,4 @@
-import { Category } from 'backend/category/domain/entities/category';
+import { Category } from '../../../../backend/category/domain/entities/category';
 import { CategoryDto } from '../dto/category.dto';
 
 export class CategoryMapper {

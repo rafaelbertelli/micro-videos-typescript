@@ -27,7 +27,7 @@ export class UpdateCategoryUsecase implements Usecase<Input, CategoryDto> {
   }
 }
 
-export type Input = {
+type Input = {
   id: string;
   name: string;
   description?: string;
