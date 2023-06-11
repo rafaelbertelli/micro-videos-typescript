@@ -1,3 +1,6 @@
-import { CreateCategoryDto } from './create-category.dto';
-
-export class UpdateCategoryDto extends CreateCategoryDto {}
+export type UpdateCategoryDto = {
+  id: string;
+  name: string;
+  description?: string;
+  is_active?: boolean;
+};
