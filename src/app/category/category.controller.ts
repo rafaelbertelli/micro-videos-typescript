@@ -3,20 +3,32 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
 
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CategoryService } from './category.service';
+import {
+  CreateCategoryUsecase,
+  FindAllCategoriesUsecase,
+  FindByIdCategoryUsecase,
+  UpdateCategoryUsecase,
+} from '../../backend/category/application';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @ApiTags('category')
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly _createCategoryUsecase: CreateCategoryUsecase,
+    private readonly _findAllCategoriesUsecase: FindAllCategoriesUsecase,
+    private readonly _findByIdCategoryUsecase: FindByIdCategoryUsecase,
+    private readonly _updateCategoryUsecase: UpdateCategoryUsecase,
+  ) {}
 
   @ApiResponse({
     status: 201,
@@ -24,30 +36,83 @@ export class CategoryController {
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    try {
+      const result = await this._createCategoryUsecase.execute(
+        createCategoryDto,
+      );
+      return result;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: error.message,
+          data: error.error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  async findAll() {
+    try {
+      const result = await this._findAllCategoriesUsecase.execute();
+      return result;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: error.message,
+          data: error.error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const result = await this._findByIdCategoryUsecase.execute(id);
+      return result;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: error.message,
+          data: error.error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoryService.update(+id, updateCategoryDto);
+    try {
+      const result = await this._updateCategoryUsecase.execute({
+        id,
+        ...updateCategoryDto,
+      });
+      return result;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: error.message,
+          data: error.error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.categoryService.remove(+id);
+    // return this.categoryService.remove(+id);
   }
 }
