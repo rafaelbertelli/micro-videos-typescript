@@ -53,15 +53,20 @@ docker-compose exec app bash      # access container
 ```
 
 ```
-CONTINUAR EM:
-https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8323
-```
-
-```
 PODE SER QUE QUEBRE NESTES PONTOS:
+
+//PARECE Q EU NAO PRECISO DE CONTRUTOR SE EU DECLARAR @INJECT NO MODULO ENTRANTE. ---TESTAR
+usar o @inject se der problema nos testes unitários por estar usando contrutor
+https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8454
+
 organizando imports:
 https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8225
 
 múltiplos módulos
 https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8228
+```
+
+```
+CONTINUAR EM:
+https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8525
 ```
