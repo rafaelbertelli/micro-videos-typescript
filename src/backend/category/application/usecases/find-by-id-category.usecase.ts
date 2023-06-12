@@ -11,10 +11,10 @@ export class FindByIdCategoryUsecase implements Usecase<string, CategoryDto> {
   async execute(id: string): Promise<CategoryDto> {
     try {
       const result = await this.categoryRepository.findById(id);
-
       return CategoryMapper.toOutput(result);
     } catch (error) {
       console.error(error);
+      throw error;
     }
   }
 }

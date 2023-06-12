@@ -21,6 +21,7 @@ export class SearchCategoriesUsecase
       return this.toOutput(result);
     } catch (error) {
       console.error(error);
+      throw error;
     }
   }
 

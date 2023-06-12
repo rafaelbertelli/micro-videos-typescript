@@ -9,21 +9,26 @@ export class UpdateCategoryUsecase implements Usecase<Input, CategoryDto> {
   ) {}
 
   async execute(input: Input): Promise<CategoryDto> {
-    const entity = await this.categoryRepository.findById(input.id);
+    try {
+      const entity = await this.categoryRepository.findById(input.id);
 
-    entity.update({ name: input.name, description: input.description });
+      entity.update({ name: input.name, description: input.description });
 
-    if (input.is_active === true) {
-      entity.activate();
+      if (input.is_active === true) {
+        entity.activate();
+      }
+
+      if (input.is_active === false) {
+        entity.deactivate();
+      }
+
+      await this.categoryRepository.update(entity);
+
+      return CategoryMapper.toOutput(entity);
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
-
-    if (input.is_active === false) {
-      entity.deactivate();
-    }
-
-    await this.categoryRepository.update(entity);
-
-    return CategoryMapper.toOutput(entity);
   }
 }
 
