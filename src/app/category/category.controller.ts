@@ -13,7 +13,9 @@ import {
 } from '@nestjs/common';
 
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { SearchResultDto } from 'backend/@seedwork/application';
 import {
+  CategoryDto,
   CreateCategoryUsecase,
   DeleteCategoryUsecase,
   FindAllCategoriesUsecase,
@@ -21,7 +23,10 @@ import {
   SearchCategoriesUsecase,
   UpdateCategoryUsecase,
 } from '../../backend/category/application';
-import { CreateCategoryDto } from './dto/create-category.dto';
+import {
+  CreateCategoryInputDto,
+  CreateCategoryOutputDto,
+} from './dto/create-category.dto';
 import { SearchCategoryDto } from './dto/search-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
@@ -29,22 +34,22 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 @Controller('category')
 export class CategoryController {
   @Inject(CreateCategoryUsecase)
-  private readonly _createCategoryUsecase: CreateCategoryUsecase;
+  private _createCategoryUsecase: CreateCategoryUsecase;
 
   @Inject(FindAllCategoriesUsecase)
-  private readonly _findAllCategoriesUsecase: FindAllCategoriesUsecase;
+  private _findAllCategoriesUsecase: FindAllCategoriesUsecase;
 
   @Inject(SearchCategoriesUsecase)
-  private readonly _searchCategoriesUsecase: SearchCategoriesUsecase;
+  private _searchCategoriesUsecase: SearchCategoriesUsecase;
 
   @Inject(FindByIdCategoryUsecase)
-  private readonly _findByIdCategoryUsecase: FindByIdCategoryUsecase;
+  private _findByIdCategoryUsecase: FindByIdCategoryUsecase;
 
   @Inject(UpdateCategoryUsecase)
-  private readonly _updateCategoryUsecase: UpdateCategoryUsecase;
+  private _updateCategoryUsecase: UpdateCategoryUsecase;
 
   @Inject(DeleteCategoryUsecase)
-  private readonly _deleteCategoryUsecase: DeleteCategoryUsecase;
+  private _deleteCategoryUsecase: DeleteCategoryUsecase;
 
   // constructor(
   //   private readonly _createCategoryUsecase: CreateCategoryUsecase,
@@ -59,11 +64,11 @@ export class CategoryController {
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Post()
-  async create(@Body() createCategoryDto: CreateCategoryDto) {
+  async create(@Body() createCategoryDto: CreateCategoryInputDto) {
     try {
-      const result = await this._createCategoryUsecase.execute(
-        createCategoryDto,
-      );
+      const result: CreateCategoryOutputDto =
+        await this._createCategoryUsecase.execute(createCategoryDto);
+
       return result;
     } catch (error) {
       throw new HttpException(
@@ -83,7 +88,9 @@ export class CategoryController {
   })
   @HttpCode(200)
   @Post('/search')
-  async search(@Body() searchCategoryDto: SearchCategoryDto) {
+  async search(
+    @Body() searchCategoryDto: SearchCategoryDto,
+  ): Promise<SearchResultDto<CategoryDto>> {
     try {
       const result = await this._searchCategoriesUsecase.execute(
         searchCategoryDto,

@@ -11,8 +11,6 @@ export class AppController {
   @Get()
   getHello(): string {
     const entity = new Category({ name: 'RAFAEL' });
-    console.log(entity);
-
     return this.appService.getHello();
   }
 }
