@@ -13,7 +13,6 @@ export class FindByIdCategoryUsecase implements Usecase<string, CategoryDto> {
       const result = await this.categoryRepository.findById(id);
       return CategoryMapper.toOutput(result);
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }

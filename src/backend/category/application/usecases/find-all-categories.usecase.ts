@@ -14,7 +14,6 @@ export class FindAllCategoriesUsecase implements Usecase<'', CategoryDto[]> {
 
       return result.map(CategoryMapper.toOutput);
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }

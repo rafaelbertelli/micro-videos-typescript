@@ -16,7 +16,6 @@ export class CreateCategoryUsecase implements Usecase<Input, CategoryDto> {
 
       return CategoryMapper.toOutput(entity);
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }

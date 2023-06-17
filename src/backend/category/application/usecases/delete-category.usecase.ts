@@ -10,7 +10,6 @@ export class DeleteCategoryUsecase implements Usecase<Input, void> {
     try {
       return await this.categoryRepository.delete(input.id);
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }
