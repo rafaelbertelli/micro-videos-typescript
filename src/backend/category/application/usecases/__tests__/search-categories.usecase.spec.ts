@@ -1,6 +1,6 @@
 import { SearchInputDto } from '../../../../../backend/@seedwork/application/dto/search-input.dto';
 import { Category } from '../../../../../backend/category/domain/entities/category';
-import { CategoryInMemoryRepository } from '../../../infra/repository/category-in-memory.repository';
+import { CategoryInMemoryRepository } from '../../../../../backend/category/infra';
 import { SearchCategoriesUsecase } from '../search-categories.usecase';
 
 describe('SearchCategoriesUsecase', () => {

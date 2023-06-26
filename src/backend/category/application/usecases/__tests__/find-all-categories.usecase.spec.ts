@@ -1,5 +1,5 @@
+import { CategoryInMemoryRepository } from '../../../../../backend/category/infra';
 import { Category } from '../../../../category/domain/entities/category';
-import { CategoryInMemoryRepository } from '../../../infra/repository/category-in-memory.repository';
 import { FindAllCategoriesUsecase } from '../find-all-categories.usecase';
 
 describe('FindAllCategoriesUsecase', () => {

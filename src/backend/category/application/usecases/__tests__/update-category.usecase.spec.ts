@@ -1,6 +1,6 @@
+import { CategoryInMemoryRepository } from '../../../../../backend/category/infra';
 import { NotFoundError } from '../../../../@seedwork/errors/not-found.error';
 import { Category } from '../../../../category/domain/entities/category';
-import { CategoryInMemoryRepository } from '../../../infra/repository/category-in-memory.repository';
 import { UpdateCategoryUsecase } from '../update-category.usecase';
 
 describe('UpdateCategoryUsecase', () => {

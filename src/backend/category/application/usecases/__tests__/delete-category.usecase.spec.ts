@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../../../../backend/@seedwork/errors';
+import { CategoryInMemoryRepository } from '../../../../../backend/category/infra';
 import { Category } from '../../../../category/domain/entities/category';
-import { CategoryInMemoryRepository } from '../../../infra/repository/category-in-memory.repository';
 import { DeleteCategoryUsecase } from '../delete-category.usecase';
 
 describe('DeleteCategoryUsecase', () => {
