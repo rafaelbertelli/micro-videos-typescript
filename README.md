@@ -2,57 +2,42 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+## Micro-Videos-Typescript
 
-## Description
+*__CodeFlix__* content management software
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+## Install
 
 ```bash
 npm install
+make create_index
 ```
 
-## Running the app
+## Run
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start       # development
+npm run start:dev   # watch mode
+npm run start:prod  # production mode
 ```
 
 ## Test
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run test      # unit tests
+npm run test:e2e  # e2e tests
+npm run test:cov  # test coverage
 ```
-
-## License
-
-Nest is [MIT licensed](LICENSE).
 
 ## TL;DR
 
 ```bash
-sudo chmod +x .docker/start.sh    # give folder permition
-docker-compose up --build -d      # execute container
-docker-compose exec app bash      # access container
+sudo chmod +x .docker/start.sh  # folder permition
+docker-compose up --build -d    # execute container
+docker-compose exec app bash    # access container
 ```
 
-```
+```text
 PODE SER QUE QUEBRE NESTES PONTOS:
 
 //PARECE Q EU NAO PRECISO DE CONTRUTOR SE EU DECLARAR @INJECT NO MODULO ENTRANTE. ---TESTAR
@@ -66,7 +51,7 @@ múltiplos módulos
 https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8228
 ```
 
-```
+```text
 CONTINUAR EM:
 https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8455
 3:30
