@@ -53,6 +53,5 @@ https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&c
 
 ```text
 CONTINUAR EM:
-https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8455
-3:30
+https://plataforma.fullcycle.com.br/courses/184/168/143/conteudos?capitulo=143&conteudo=8458
 ```
