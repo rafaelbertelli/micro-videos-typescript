@@ -26,6 +26,41 @@ describe('CategoryModel', () => {
     expect(CategoryModel).toBeDefined();
   });
 
+  test('maping props', () => {
+    const attrsMap = CategoryModel.getAttributes();
+    const attrs = Object.keys(attrsMap);
+
+    expect(attrs).toContain('id');
+    expect(attrs).toContain('name');
+    expect(attrs).toContain('description');
+    expect(attrs).toContain('created_at');
+    expect(attrs).toContain('is_active');
+
+    expect(attrsMap.id).toMatchObject({
+      fieldName: 'id',
+      primaryKey: true,
+    });
+
+    expect(attrsMap.name).toMatchObject({
+      fieldName: 'name',
+      allowNull: false,
+    });
+
+    expect(attrsMap.description).toMatchObject({
+      fieldName: 'description',
+    });
+
+    expect(attrsMap.is_active).toMatchObject({
+      fieldName: 'is_active',
+      allowNull: false,
+    });
+
+    expect(attrsMap.created_at).toMatchObject({
+      fieldName: 'created_at',
+      allowNull: false,
+    });
+  });
+
   it('should create a category', async () => {
     const opts = {
       id: 'd1942dfc-ecbe-41e3-9359-b6abef4a2d0d',
