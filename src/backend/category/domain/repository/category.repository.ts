@@ -12,10 +12,11 @@ export namespace CategoryRepository {
   export class SearchParams extends SearchParamsContract<Filter> {}
   export class SearchResult extends SearchResultContract<Category, Filter> {}
 
-  export type Repository = SearchebleRepositoryInterface<
-    Category,
-    Filter,
-    SearchParams,
-    SearchResult
-  >;
+  export interface Repository
+    extends SearchebleRepositoryInterface<
+      Category,
+      Filter,
+      SearchParams,
+      SearchResult
+    > {}
 }

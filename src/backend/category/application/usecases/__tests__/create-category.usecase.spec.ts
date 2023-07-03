@@ -17,7 +17,7 @@ describe('CreateCategoryUsecase', () => {
     expect(result).toStrictEqual({
       id: repository.items[0].id,
       name: 'Teste',
-      description: undefined,
+      description: null,
       is_active: false,
       created_at: repository.items[0].created_at,
     });

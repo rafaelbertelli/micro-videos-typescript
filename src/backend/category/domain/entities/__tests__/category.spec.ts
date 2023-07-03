@@ -19,7 +19,7 @@ describe('Category', () => {
 
       expect(category.id).not.toBeUndefined();
       expect(category.name).toEqual(name);
-      expect(category.description).toBeUndefined();
+      expect(category.description).toBeNull();
       expect(category.is_active).toBeFalsy();
       expect(category.created_at).not.toBeUndefined();
     });
@@ -115,7 +115,7 @@ describe('Category', () => {
       category.update({ name, description: '' });
 
       expect(category.name).toEqual(name);
-      expect(category.description).toBeUndefined();
+      expect(category.description).toBeNull();
     });
 
     it('should not clean name', () => {

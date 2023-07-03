@@ -35,15 +35,15 @@ export class Category extends Entity<CategoryProps> {
     if (value) this.props.name = value;
   }
 
-  get description(): string | undefined {
-    return this.props.description;
+  get description(): string | null {
+    return this.props.description ?? null;
   }
 
   private set description(value: string) {
     if (value) {
       this.props.description = value;
-    } else if (value === '') {
-      this.props.description = undefined;
+    } else {
+      this.props.description = null;
     }
   }
 
@@ -75,7 +75,9 @@ export class Category extends Entity<CategoryProps> {
     Category.validate({ name, description });
 
     this.name = name;
-    this.description = description;
+    if (description || description === '') {
+      this.description = description;
+    }
   }
 
   static validate(props: CategoryProps) {
