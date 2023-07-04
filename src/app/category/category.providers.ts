@@ -10,6 +10,8 @@ import {
 import { CategoryRepository } from '../../backend/category/domain';
 import { CategoryInMemoryRepository } from '../../backend/category/infra';
 
+const REPOSITORY_IN_USE = 'CATEGORY_IN_MEMORY_REPOSITORY';
+
 export namespace CATEGORY_PROVIDERS {
   export namespace REPOSITORIES {
     export const CATEGORY_IN_MEMORY_REPOSITORY = {
@@ -24,7 +26,7 @@ export namespace CATEGORY_PROVIDERS {
       useFactory: (categoryRepository: CategoryRepository.Repository) => {
         return new CreateCategoryUsecase(categoryRepository);
       },
-      inject: [REPOSITORIES.CATEGORY_IN_MEMORY_REPOSITORY.provide],
+      inject: [REPOSITORIES[REPOSITORY_IN_USE].provide],
     };
 
     export const FIND_ALL_CATEGORIES_USECASE = {
@@ -32,7 +34,7 @@ export namespace CATEGORY_PROVIDERS {
       useFactory: (categoryRepository: CategoryRepository.Repository) => {
         return new FindAllCategoriesUsecase(categoryRepository);
       },
-      inject: [REPOSITORIES.CATEGORY_IN_MEMORY_REPOSITORY.provide],
+      inject: [REPOSITORIES[REPOSITORY_IN_USE].provide],
     };
 
     export const SEARCH_CATEGORIES_USECASE = {
@@ -40,7 +42,7 @@ export namespace CATEGORY_PROVIDERS {
       useFactory: (categoryRepository: CategoryRepository.Repository) => {
         return new SearchCategoriesUsecase(categoryRepository);
       },
-      inject: [REPOSITORIES.CATEGORY_IN_MEMORY_REPOSITORY.provide],
+      inject: [REPOSITORIES[REPOSITORY_IN_USE].provide],
     };
 
     export const FIND_BY_ID_CATEGORY_USECASE = {
@@ -48,7 +50,7 @@ export namespace CATEGORY_PROVIDERS {
       useFactory: (categoryRepository: CategoryRepository.Repository) => {
         return new FindByIdCategoryUsecase(categoryRepository);
       },
-      inject: [REPOSITORIES.CATEGORY_IN_MEMORY_REPOSITORY.provide],
+      inject: [REPOSITORIES[REPOSITORY_IN_USE].provide],
     };
 
     export const UPDATE_CATEGORY_USECASE = {
@@ -56,7 +58,7 @@ export namespace CATEGORY_PROVIDERS {
       useFactory: (categoryRepository: CategoryRepository.Repository) => {
         return new UpdateCategoryUsecase(categoryRepository);
       },
-      inject: [REPOSITORIES.CATEGORY_IN_MEMORY_REPOSITORY.provide],
+      inject: [REPOSITORIES[REPOSITORY_IN_USE].provide],
     };
 
     export const DELETE_CATEGORY_USECASE = {
@@ -64,7 +66,7 @@ export namespace CATEGORY_PROVIDERS {
       useFactory: (categoryRepository: CategoryRepository.Repository) => {
         return new DeleteCategoryUsecase(categoryRepository);
       },
-      inject: [REPOSITORIES.CATEGORY_IN_MEMORY_REPOSITORY.provide],
+      inject: [REPOSITORIES[REPOSITORY_IN_USE].provide],
     };
   }
 }
