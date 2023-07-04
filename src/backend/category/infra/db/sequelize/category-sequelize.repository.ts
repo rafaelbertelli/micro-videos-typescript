@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../../../../backend/@seedwork/errors';
 import {
   Category,
   CategoryRepository,
@@ -16,13 +17,15 @@ export class CategorySequelizeRepository
   }
 
   async findById(id: string): Promise<Category> {
-    const result = await this.categoryModel.findByPk(id);
-    return new Category(result);
+    const result = await this.categoryModel.findByPk(id, {
+      rejectOnEmpty: new NotFoundError(`Entity ID: ${id} not found`),
+    });
+    return new Category(result.toJSON());
   }
 
   async findAll(): Promise<Category[]> {
     const result = await this.categoryModel.findAll();
-    return result.map((item) => new Category(item));
+    return result.map((item) => new Category(item.toJSON()));
   }
 
   async update(entity: Category): Promise<void> {
