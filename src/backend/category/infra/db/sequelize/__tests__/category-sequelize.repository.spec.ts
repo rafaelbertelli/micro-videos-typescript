@@ -68,4 +68,16 @@ describe('CategorySequelizeRepository', () => {
       );
     });
   });
+
+  describe('findAll', () => {
+    it('should be able to findAll', async () => {
+      const category1 = new Category({ name: 'Mais uma vez 1' });
+      const category2 = new Category({ name: 'Mais uma vez 2' });
+      await CategoryModel.bulkCreate([category1.toJson(), category2.toJson()]);
+      const result = await repository.findAll();
+      expect(result).toHaveLength(2);
+      expect(result[0].toJson()).toStrictEqual(category1.toJson());
+      expect(result[1].toJson()).toStrictEqual(category2.toJson());
+    });
+  });
 });
