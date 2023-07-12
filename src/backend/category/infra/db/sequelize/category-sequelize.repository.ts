@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { NotFoundError } from '../../../../../backend/@seedwork/errors';
 import {
   Category,
@@ -10,7 +11,7 @@ export class CategorySequelizeRepository
 {
   constructor(private categoryModel: typeof CategoryModel) {}
 
-  sortableFields: ['name', 'created_at'];
+  sortableFields = ['name', 'created_at'];
 
   async insert(entity: Category): Promise<void> {
     await this.categoryModel.create(entity.toJson());
@@ -41,6 +42,35 @@ export class CategorySequelizeRepository
   async search(
     props: CategoryRepository.SearchParams,
   ): Promise<CategoryRepository.SearchResult> {
-    throw new Error('Method not implemented.');
+    // private _page: number;
+    // private _per_page = 15;
+    // private _sort: string;
+    // private _sort_dir: SortDirection;
+    // private _filter: Filter;
+
+    const { rows: models, count } = await this.categoryModel.findAndCountAll({
+      ...(props.filter && {
+        where: {
+          name: {
+            [Op.like]: `%${props.filter}%`,
+          },
+        },
+      }),
+      ...(props.sort && this.sortableFields.includes(props.sort)
+        ? { order: [[props.sort, props.sort_dir]] }
+        : { order: [['created_at', 'DESC']] }),
+      offset: (props.page - 1) * props.per_page,
+      limit: props.per_page,
+    });
+
+    return new CategoryRepository.SearchResult({
+      items: models.map((item) => new Category(item.toJSON())),
+      total: count,
+      current_page: props.page,
+      per_page: props.per_page,
+      sort: props.sort,
+      sort_dir: props.sort_dir,
+      filter: props.filter,
+    });
   }
 }

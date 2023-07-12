@@ -1,6 +1,9 @@
 import { Sequelize } from 'sequelize-typescript';
 import { NotFoundError } from '../../../../../../backend/@seedwork/errors';
-import { Category } from '../../../../../../backend/category/domain';
+import {
+  Category,
+  CategoryRepository,
+} from '../../../../../../backend/category/domain';
 import { CategorySequelizeRepository } from '../category-sequelize.repository';
 import { CategoryModel } from '../category.model';
 
@@ -78,6 +81,25 @@ describe('CategorySequelizeRepository', () => {
       expect(result).toHaveLength(2);
       expect(result[0].toJson()).toStrictEqual(category1.toJson());
       expect(result[1].toJson()).toStrictEqual(category2.toJson());
+    });
+  });
+
+  describe('search', () => {
+    it('should be able to search', async () => {
+      const category1 = new Category({ name: 'Mais uma vez 1' });
+      const category2 = new Category({ name: 'Mais uma vez 2' });
+
+      await CategoryModel.bulkCreate([category1.toJson(), category2.toJson()]);
+
+      const result = await repository.search(
+        new CategoryRepository.SearchParams({
+          filter: 'mais',
+        }),
+      );
+
+      expect(result.items).toHaveLength(2);
+      expect(result.items[0].toJson()).toStrictEqual(category1.toJson());
+      expect(result.items[1].toJson()).toStrictEqual(category2.toJson());
     });
   });
 });
