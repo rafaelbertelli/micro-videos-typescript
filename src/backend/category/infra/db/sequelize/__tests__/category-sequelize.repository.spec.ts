@@ -101,5 +101,10 @@ describe('CategorySequelizeRepository', () => {
       expect(result.items[0].toJson()).toStrictEqual(category1.toJson());
       expect(result.items[1].toJson()).toStrictEqual(category2.toJson());
     });
+
+    it('should find from a large repository', async () => {
+      await CategoryModel.factory().create();
+      console.log(await CategoryModel.findAll());
+    });
   });
 });

@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
-import { Column, PrimaryKey, Table, Model } from 'sequelize-typescript';
+import { Column, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { SequelizeModelFactory } from '../../../../../backend/@seedwork/infra/sequelize';
 
 type CategoryModelProperties = {
   id: string;
@@ -37,4 +38,16 @@ export class CategoryModel extends Model<CategoryModelProperties> {
     allowNull: false,
   })
   declare created_at: Date;
+
+  static factory() {
+    const chance: Chance.Chance = require('chance')();
+
+    return new SequelizeModelFactory(CategoryModel, () => ({
+      id: chance.guid({ version: 4 }),
+      name: chance.name(),
+      description: chance.sentence(),
+      is_active: true,
+      created_at: chance.date(),
+    }));
+  }
 }
