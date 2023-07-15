@@ -39,9 +39,10 @@ describe('SequelizeModelFactory', () => {
     expect(SequelizeModelFactory).toBeDefined();
   });
 
-  it('create method', async () => {
+  test('create method', async () => {
     const model = await StubModel.factory().create();
     expect(uuidValidate(model.id)).toBeTruthy();
+    expect(model.id).not.toBeNull();
     expect(model.name).not.toBeNull();
     expect(StubModel.mockFactory).toHaveBeenCalled();
 
@@ -54,6 +55,22 @@ describe('SequelizeModelFactory', () => {
       name: chance.name(),
     };
     const modelWithData = await StubModel.factory().create(params);
+    expect(modelWithData.toJSON().id).toEqual(params.id);
+    expect(modelWithData.toJSON().name).toEqual(params.name);
+  });
+
+  test('make method', async () => {
+    const model = await StubModel.factory().make();
+    expect(uuidValidate(model.id)).toBeTruthy();
+    expect(model.id).not.toBeNull();
+    expect(model.name).not.toBeNull();
+    expect(StubModel.mockFactory).toHaveBeenCalled();
+
+    const params = {
+      id: chance.guid({ version: 4 }),
+      name: chance.name(),
+    };
+    const modelWithData = await StubModel.factory().make(params);
     expect(modelWithData.toJSON().id).toEqual(params.id);
     expect(modelWithData.toJSON().name).toEqual(params.name);
   });
