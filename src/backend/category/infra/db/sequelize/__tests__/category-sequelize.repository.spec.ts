@@ -6,27 +6,15 @@ import {
 } from '../../../../../../backend/category/domain';
 import { CategorySequelizeRepository } from '../category-sequelize.repository';
 import { CategoryModel } from '../category.model';
+import { setupSequelize } from '../../../../../../backend/@seedwork/infra/testing/helpers.db';
 
 describe('CategorySequelizeRepository', () => {
-  let sequelize: Sequelize;
-  let repository: CategorySequelizeRepository;
+  setupSequelize({ models: [CategoryModel] });
 
-  beforeAll(() => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      host: ':memory:',
-      logging: false,
-      models: [CategoryModel],
-    });
-  });
+  let repository: CategorySequelizeRepository;
 
   beforeEach(async () => {
     repository = new CategorySequelizeRepository(CategoryModel);
-    await sequelize.sync({ force: true });
-  });
-
-  afterAll(async () => {
-    await sequelize.close();
   });
 
   describe('insert', () => {

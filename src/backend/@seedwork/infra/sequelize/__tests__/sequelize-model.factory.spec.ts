@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript';
 import { validate as uuidValidate } from 'uuid';
 import { SequelizeModelFactory } from '../';
+import { setupSequelize } from '../../testing/helpers.db';
 
 const chance = _chance.Chance();
 
@@ -32,24 +33,7 @@ class StubModel extends Model {
 }
 
 describe('SequelizeModelFactory', () => {
-  let sequelize: Sequelize;
-
-  beforeAll(() => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      host: ':memory:',
-      logging: false,
-      models: [StubModel],
-    });
-  });
-
-  beforeEach(async () => {
-    await sequelize.sync({ force: true });
-  });
-
-  afterAll(async () => {
-    await sequelize.close();
-  });
+  setupSequelize({ models: [StubModel] });
 
   it('should be defined', () => {
     expect(SequelizeModelFactory).toBeDefined();
