@@ -21,5 +21,9 @@ export function setupSequelize(options: SequelizeOptions = {}) {
     await sequelize.close();
   });
 
-  return { sequelize };
+  return {
+    get sequelize() {
+      return sequelize;
+    },
+  };
 }
