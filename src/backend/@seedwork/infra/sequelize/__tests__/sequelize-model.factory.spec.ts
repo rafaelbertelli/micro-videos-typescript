@@ -146,4 +146,57 @@ describe('SequelizeModelFactory', () => {
     expect(models[0].id).not.toEqual(models[1].id);
     expect(models[0].name).not.toEqual(models[1].name);
   });
+
+  test('bulkBuild method using empty param', async () => {
+    const models = await StubModel.factory().bulkCreate();
+
+    expect(models).toHaveLength(1);
+    expect(uuidValidate(models[0].id)).toBeTruthy();
+    expect(models[0].id).not.toBeNull();
+    expect(models[0].name).not.toBeNull();
+    expect(StubModel.mockFactory).toHaveBeenCalledTimes(1);
+  });
+
+  test('bulkBuild method using one param', async () => {
+    const params = {
+      id: chance.guid({ version: 4 }),
+      name: chance.name(),
+    };
+
+    const models = await StubModel.factory().bulkCreate(() => params);
+
+    expect(models).toHaveLength(1);
+    expect(uuidValidate(models[0].id)).toBeTruthy();
+    expect(models[0].id).not.toBeNull();
+    expect(models[0].name).not.toBeNull();
+    expect(StubModel.mockFactory).not.toHaveBeenCalled();
+  });
+
+  test('bulkBuild method using empty param and count gt 1', async () => {
+    const models = await StubModel.factory().count(5).bulkCreate();
+
+    expect(models).toHaveLength(5);
+    expect(uuidValidate(models[0].id)).toBeTruthy();
+    expect(models[0].id).not.toBeNull();
+    expect(models[0].name).not.toBeNull();
+    expect(StubModel.mockFactory).toHaveBeenCalledTimes(5);
+  });
+
+  test('bulkBuild method using one param and count gt 1', async () => {
+    const models = await StubModel.factory()
+      .count(2)
+      .bulkCreate(() => ({
+        id: chance.guid({ version: 4 }),
+        name: chance.name(),
+      }));
+
+    expect(models).toHaveLength(2);
+    expect(uuidValidate(models[0].id)).toBeTruthy();
+    expect(models[0].id).not.toBeNull();
+    expect(models[0].name).not.toBeNull();
+    expect(StubModel.mockFactory).not.toHaveBeenCalledTimes(2);
+
+    expect(models[0].id).not.toEqual(models[1].id);
+    expect(models[0].name).not.toEqual(models[1].name);
+  });
 });
